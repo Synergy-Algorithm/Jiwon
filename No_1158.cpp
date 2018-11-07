@@ -46,9 +46,8 @@ int main(int argc, char** argv)
 	{
 	
 		temp = searchNode(&temp1, m);
-		
 		temp1 = temp -> nextNode;
-		if(i!= 1)
+		if(i != 1)
 			printf(", %d", temp->num);
 		
 		
@@ -111,9 +110,11 @@ nodepoint searchNode(nodepoint* Head, int Locate)
 
 void deleteNode(nodepoint* Head, nodepoint remove)
 {
-	if(*Head == remove)
+	
+		
+	if((*Head) == remove)
 	{
-		*Head = remove->nextNode;
+		(*Head) = remove->nextNode;
 	}
 	
 	
@@ -134,7 +135,6 @@ void deleteNode(nodepoint* Head, nodepoint remove)
 		
 		
 	}
-	//free(remove);
+	free(remove);
 
 }
-
