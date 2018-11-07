@@ -11,8 +11,8 @@ typedef struct Node{
 nodepoint createNode(int value);
 void appendNode(nodepoint* Head, nodepoint node);
 nodepoint searchNode(nodepoint* Head, int Locate);
-void deleteNode(nodepoint* Head, nodepoint remove);
-//void destroyNode(nodepoint remove);
+void deleteNode(nodepoint* Head, nodepoint remove, nodepoint* last);
+
 
 int main(int argc, char** argv)
 {
@@ -29,16 +29,15 @@ int main(int argc, char** argv)
 	{
 		appendNode(&List, createNode(i));
 	}
+	Node* last = List;
 	Node* temp = List;
-	while(temp->nextNode != NULL)
+	while(last->nextNode != NULL)
 	{
-		temp = temp->nextNode;
+		last = last->nextNode;
 		
 	}
 
-	temp -> nextNode = List;
-
-	
+	last -> nextNode = List;
 	printf("<%d", m);
 	temp = List;
 	Node* temp1 = List;
@@ -51,7 +50,7 @@ int main(int argc, char** argv)
 			printf(", %d", temp->num);
 		
 		
-		deleteNode(&List,  temp);
+		deleteNode(&List,  temp, &last);
 		
 		
 		
@@ -98,26 +97,32 @@ void appendNode(nodepoint* Head, nodepoint node)
 nodepoint searchNode(nodepoint* Head, int Locate)
 {
 	nodepoint search = *Head;
-	int i = 0;
-	while(search != NULL && i < Locate-1)
+	Locate = Locate - 1;
+	while(search != NULL && (--Locate) >= 0)
 	{
 		search =search->nextNode;	
-		i++;
+		
 	}
+	if(search == NULL)
+	{
+		return NULL;
+	}
+	 
+	
 	
 	return search;
 }
 
-void deleteNode(nodepoint* Head, nodepoint remove)
+void deleteNode(nodepoint* Head, nodepoint remove, nodepoint* last)
 {
 	
 		
 	if((*Head) == remove)
 	{
 		(*Head) = remove->nextNode;
+		(*last)->nextNode = remove->nextNode;
+
 	}
-	
-	
 	
 	
 	else{
@@ -130,7 +135,17 @@ void deleteNode(nodepoint* Head, nodepoint remove)
 		
 		if(search != NULL)
 		{
+			if(search->nextNode == *last){
+			
+				*last = search;
+			}
 			search -> nextNode = remove -> nextNode;
+		
+				
+		}
+		else
+		{
+			return;
 		}
 		
 		
